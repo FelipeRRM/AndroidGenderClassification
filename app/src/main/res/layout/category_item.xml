@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/relativeParentToClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_centerHorizontal="true"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:foreground="?attr/selectableItemBackground"
+        android:elevation="3dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/frameToElevate"
+        >
+
+        <ImageView
+            android:adjustViewBounds="true"
+            android:id="@+id/editionImage"
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/other_editions_height"
+            android:maxHeight="@dimen/other_editions_height"
+            android:src="@drawable/noimage"/>
+
+        </FrameLayout>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/frameToElevate"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/editionTextDate"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20/05/2016"/>
+
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:elevation="10dp"
+        android:layout_alignRight="@+id/relativeParentToClick"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="-8dp"
+        android:id="@+id/btnErase"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/grey_circle"
+        android:foreground="@drawable/trash_circle_ripple"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+
+</RelativeLayout>

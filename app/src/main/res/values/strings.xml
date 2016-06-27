@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Camera Test</string>
+    <string name="app_name">Clasficação por RNA</string>
+    <string name="manage_groups_network">Gerenciar Grupos e Rede</string>
+    <string name="classify_image">Classificar Imagem</string>
+    <string name="train_network">Treinar Rede</string>
+    <string name="add_category">Adicionar Categoria</string>
+    <string name="needs_training">Rede Precisa de Treinamento</string>
+    <string name="delete_category">Deletar Categoria?</string>
+    <string name="delete_category_message">Tem certeza de que deseja deletar essa categoria?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">Ok</string>
 </resources>

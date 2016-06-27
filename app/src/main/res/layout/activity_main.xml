@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="feliperrm.trabalhoic.Activities.MainActivity"
+    tools:context=".Activities.CameraActivity"
     android:animateLayoutChanges="true">
 
     <com.commonsware.cwac.camera.CameraView

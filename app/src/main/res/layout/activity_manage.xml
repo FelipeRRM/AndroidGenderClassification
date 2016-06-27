@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="feliperrm.trabalhoic.Activities.ManageActivity">
+
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#222"
+        android:layout_alignParentTop="true"
+        >
+
+        <TextView
+            android:text="@string/needs_training"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/topBar"
+        android:layout_above="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:background="#222"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:id="@+id/btnAddCategory"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/add_category"
+            />
+
+        <Button
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:id="@+id/btnTrainNetwork"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/train_network"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

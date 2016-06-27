@@ -15,7 +15,7 @@ import com.commonsware.cwac.camera.SimpleCameraHost;
 import feliperrm.trabalhoic.Camera.MyCameraHost;
 import feliperrm.trabalhoic.R;
 
-public class MainActivity extends AppCompatActivity implements CameraHostProvider, MyCameraHost.CameraHostCallback {
+public class CameraActivity extends AppCompatActivity implements CameraHostProvider, MyCameraHost.CameraHostCallback {
 
 
     CameraView cameraView;

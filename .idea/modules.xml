@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TrabalhoIC.iml" filepath="$PROJECT_DIR$/TrabalhoIC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidGenderClassification.iml" filepath="$PROJECT_DIR$/AndroidGenderClassification.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

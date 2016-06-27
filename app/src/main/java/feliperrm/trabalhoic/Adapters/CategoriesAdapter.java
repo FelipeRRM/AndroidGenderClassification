@@ -1,13 +1,9 @@
 package feliperrm.trabalhoic.Adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.RippleDrawable;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +51,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public void onBindViewHolder(CategoryViewHolder holder, final int position) {
         final Category atual = categories.get(position);
 
-        holder.date.setText(atual.getName());
+        holder.text.setText(atual.getName());
         Geral.setAnimationElevation(holder.frameToElevate, holder.frameToElevate, true);
         holder.frameToElevate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +62,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
             }
         });
         if(atual.getFiles()!= null && atual.getFiles().size()>0){
-            Glide.with(context).load(atual.getFiles().get(new Random().nextInt(atual.getFiles().size()))).placeholder(R.drawable.noimage).crossFade().into(holder.image);
+            Glide.with(context).load(Geral.getCategoryFolderPath(atual.getName())+atual.getFiles().get(new Random().nextInt(atual.getFiles().size()))).placeholder(R.drawable.noimage)
+                    .crossFade().into(holder.image);
         }
         else{
             holder.image.setImageDrawable(context.getResources().getDrawable(R.drawable.noimage));
@@ -112,14 +109,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public static class CategoryViewHolder extends RecyclerView.ViewHolder{
 
         ImageView image;
-        TextView date;
+        TextView text;
         FrameLayout frameToElevate;
         FrameLayout btnErase;
 
         public CategoryViewHolder(View itemView, Context context) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.editionImage);
-            date = (TextView) itemView.findViewById(R.id.editionTextDate);
+            text = (TextView) itemView.findViewById(R.id.editionTextDate);
             frameToElevate = (FrameLayout) itemView.findViewById(R.id.frameToElevate);
             btnErase = (FrameLayout) itemView.findViewById(R.id.btnErase);
             Geral.setAnimationElevation(btnErase, btnErase, true);

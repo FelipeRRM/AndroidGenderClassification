@@ -138,6 +138,7 @@ public class ManageActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                progressDialog.dismiss();
                 if(progressDialog!=null)
                     progressDialog.dismiss();
                 if(networkStatusTxt!=null)
@@ -163,6 +164,7 @@ public class ManageActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                progressDialog.dismiss();
                 if(Singleton.getSingleton().getNeedsToTrainNetwork()) {
                     networkStatusTxt.setText(getString(R.string.needs_training));
                     recyclerView.getAdapter().notifyDataSetChanged();

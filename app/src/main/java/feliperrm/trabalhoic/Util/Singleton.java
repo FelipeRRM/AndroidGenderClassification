@@ -90,4 +90,26 @@ public class Singleton {
         }
         setCategories(categories);
     }
+
+    public void removeFileFromCategory(String fileName, String categoryName) {
+        ArrayList<Category> categories = getCategories();
+        for (Category category : categories) {
+            if (category.getName().equals(categoryName)) {
+                int i = 0;
+                while (i < category.getFiles().size()) {
+                    String tempFileName = category.getFiles().get(i);
+                    if (fileName.equals(tempFileName)) {
+                        category.getFiles().remove(i);
+                    } else {
+                        i++;
+                    }
+                }
+            }
+        }
+        setCategories(categories);
+    }
+
+
+
+
 }

@@ -15,4 +15,6 @@
     <string name="title_already_exists">Título de categoria já existe!</string>
     <string name="error">Erro</string>
     <string name="loading_categories">Carregando categorias...</string>
+    <string name="delete_image">Deletar Imagem</string>
+    <string name="delete_image_message">Tem certeza que deseja deletar essa imagem?</string>
 </resources>

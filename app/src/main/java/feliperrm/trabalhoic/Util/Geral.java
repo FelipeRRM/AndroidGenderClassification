@@ -341,4 +341,10 @@ public class Geral {
     public static void prepareFileForNetwork(String absolutePath) {
         File file = new File(absolutePath);
     }
+
+    public static void deleteFile(String filePath) {
+        File file = new File(filePath);
+        boolean deleted = file.delete();
+        Log.d("Deleted File", String.valueOf(deleted));
+    }
 }

@@ -9,4 +9,10 @@
     <string name="delete_category_message">Tem certeza de que deseja deletar essa categoria?</string>
     <string name="cancel">Cancelar</string>
     <string name="ok">Ok</string>
+    <string name="training_network">Treinando a rede, aguarde...</string>
+    <string name="network_is_trained">A rede está atualizada!</string>
+    <string name="enter_category_name">Digite o nome da categoria:</string>
+    <string name="title_already_exists">Título de categoria já existe!</string>
+    <string name="error">Erro</string>
+    <string name="loading_categories">Carregando categorias...</string>
 </resources>

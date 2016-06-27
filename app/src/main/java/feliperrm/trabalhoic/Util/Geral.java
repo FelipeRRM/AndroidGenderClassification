@@ -20,12 +20,12 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,7 +37,7 @@ public class Geral {
 
 
     private static final String ARQUIVO = "sharedpreferences";
-    private static final String PUBLIC_SUBFOLDER = "AndroidClassification";
+    private static final String APP_NAME = "AndroidClassification";
 
     /**
      * This method converts dp unit to equivalent pixels, depending on device density.
@@ -305,18 +305,22 @@ public class Geral {
 
     public static String getCategoryFolderPath(String category) {
         try {
-            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +"/" + PUBLIC_SUBFOLDER + "/" + category;
+            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +"/" + APP_NAME + "/" + category + "/";
         }
         catch (Exception e){
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getCategoryFolderParent(){
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +"/" + APP_NAME + "/";
     }
 
     public static String getNewImageFilePath(String category) {
         try {
             Date date = new Date();
-            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +"/" + PUBLIC_SUBFOLDER + "/" + category + "/" + date.getTime() + ".jpg";
+            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +"/" + APP_NAME + "/" + category + "/" + date.getTime() + ".jpg";
         }
         catch (Exception e){
             e.printStackTrace();
@@ -324,4 +328,17 @@ public class Geral {
         }
     }
 
+    public static void deleteDir(File file) {
+        File[] contents = file.listFiles();
+        if (contents != null) {
+            for (File f : contents) {
+                deleteDir(f);
+            }
+        }
+        file.delete();
+    }
+
+    public static void prepareFileForNetwork(String absolutePath) {
+        File file = new File(absolutePath);
+    }
 }

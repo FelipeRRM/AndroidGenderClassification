@@ -14,6 +14,7 @@
         >
 
         <TextView
+            android:id="@+id/networkstatus_text"
             android:text="@string/needs_training"
             android:textSize="16sp"
             android:textColor="@android:color/white"
@@ -39,7 +40,7 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@android:color/white"
             android:id="@+id/btnAddCategory"
             android:layout_width="0dp"
@@ -50,7 +51,7 @@
             />
 
         <Button
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@android:color/white"
             android:id="@+id/btnTrainNetwork"
             android:layout_width="0dp"

@@ -54,7 +54,7 @@
         android:elevation="10dp"
         android:layout_alignRight="@+id/relativeParentToClick"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="-8dp"
+        android:layout_marginRight="0dp"
         android:id="@+id/btnErase"
         android:layout_width="35dp"
         android:layout_height="35dp"

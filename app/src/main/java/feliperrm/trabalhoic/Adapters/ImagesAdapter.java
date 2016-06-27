@@ -1,13 +1,9 @@
 package feliperrm.trabalhoic.Adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.RippleDrawable;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +29,13 @@ import feliperrm.trabalhoic.Util.Singleton;
 /**
  * Created by felip on 20/05/2016.
  */
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder> {
+public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.CategoryViewHolder> {
 
 
     Context context;
     ArrayList<Category> categories;
 
-    public CategoriesAdapter(Context context, ArrayList<Category> categories) {
+    public ImagesAdapter(Context context, ArrayList<Category> categories) {
         this.context = context;
         this.categories = categories;
     }

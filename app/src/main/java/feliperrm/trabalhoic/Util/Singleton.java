@@ -2,6 +2,7 @@ package feliperrm.trabalhoic.Util;
 
 
 import com.google.gson.Gson;
+import com.google.gson.internal.Streams;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -16,6 +17,19 @@ public class Singleton {
     private static Singleton singleton;
     ArrayList<Category> categories;
     private static final String CATEGORIES_KEY = "categorieskey";
+    private Boolean needsToTrainNetwork;
+    private static final String NEEDS_TRAIN_KEY = "needstrainingkey";
+
+    public Boolean getNeedsToTrainNetwork() {
+        if(needsToTrainNetwork==null)
+            needsToTrainNetwork = Boolean.valueOf(Geral.loadSharedPreference(MyApp.getContext(), NEEDS_TRAIN_KEY, String.valueOf(true)));
+        return needsToTrainNetwork;
+    }
+
+    public void setNeedsToTrainNetwork(Boolean needsToTrainNetwork) {
+        Geral.salvarSharedPreference(MyApp.getContext(), NEEDS_TRAIN_KEY, String.valueOf(needsToTrainNetwork));
+        this.needsToTrainNetwork = needsToTrainNetwork;
+    }
 
     public ArrayList<Category> getCategories() {
         if(categories==null) {
@@ -40,6 +54,40 @@ public class Singleton {
     public void removeCategoria(int position) {
         ArrayList<Category> categories = getCategories();
         categories.remove(position);
+        setCategories(categories);
+    }
+
+    public void addToCategories(Category category){
+        ArrayList<Category> categories = getCategories();
+        categories.add(category);
+        setCategories(categories);
+    }
+
+    public boolean isStringInCategory(String title){
+        for (Category category : getCategories())
+            if(category.getName().equals(title))
+                return true;
+        return false;
+    }
+
+    public boolean isFileInCategory(String fileName, String categoryName){
+        for (Category category : getCategories()) {
+            if (category.getName().equals(categoryName)) {
+                for (String tempFileName: category.getFiles())
+                    if(fileName.equals(tempFileName))
+                        return true;
+            }
+        }
+        return false;
+    }
+
+    public void addFileToCategory(String fileName, String categoryName){
+        ArrayList<Category> categories = getCategories();
+        for (Category category : categories) {
+            if (category.getName().equals(categoryName)) {
+                category.getFiles().add(fileName);
+            }
+        }
         setCategories(categories);
     }
 }

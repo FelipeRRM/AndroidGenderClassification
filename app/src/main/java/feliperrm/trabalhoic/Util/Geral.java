@@ -407,7 +407,7 @@ public class Geral {
                     R = (val >> 16) & 0xff ;
                     G = (val >> 8) & 0xff ;
                     B = val & 0xff ;
-                    grayscale[i*width + j] = (float) (0.21*R + 0.71*G + 0.07*B);
+                    grayscale[i*width + j] = (float) (0.21*R + 0.71*G + 0.07*B)/10;
                 }
             }
 
@@ -426,7 +426,7 @@ public class Geral {
                 R = (val >> 16) & 0xff ;
                 G = (val >> 8) & 0xff ;
                 B = val & 0xff ;
-                grayscale[i*width + j] = (float) (0.21*R + 0.71*G + 0.07*B);
+                grayscale[i*width + j] = (float) (0.21*R + 0.71*G + 0.07*B)/10;
             }
         }
 

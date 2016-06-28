@@ -89,6 +89,8 @@ public class CameraActivity extends AppCompatActivity implements CameraHostProvi
             @Override
             public void onClick(View view) {
                 try {
+                    imageTaken.setImageBitmap(null);
+                    lastTakenPicture = null;
                     cameraView.takePicture(true, true);
                     acceptPicture.setVisibility(View.VISIBLE);
                     dennyPicture.setVisibility(View.VISIBLE);
@@ -117,7 +119,6 @@ public class CameraActivity extends AppCompatActivity implements CameraHostProvi
                 acceptPicture.setVisibility(View.GONE);
                 takePicture.setVisibility(View.VISIBLE);
                 cameraView.restartPreview();
-                imageTaken.setImageBitmap(lastTakenPicture);
                 resultLayout.setVisibility(View.VISIBLE);
                 final Mlp mlp = Singleton.getSingleton().getMlp();
                 if (mlp == null)
@@ -130,7 +131,21 @@ public class CameraActivity extends AppCompatActivity implements CameraHostProvi
                     new AsyncTask<Void, Void, Void>() {
                         @Override
                         protected Void doInBackground(Void... voids) {
-                            results= mlp.evaluate(Geral.getImageGreyscaleArray(Geral.getLowResBitmap(lastTakenPicture)));
+                            try {
+                                while(lastTakenPicture==null){
+                                    Thread.sleep(200);
+                                }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        imageTaken.setImageBitmap(lastTakenPicture);
+                                    }
+                                });
+                                results = mlp.evaluate(Geral.getImageGreyscaleArray(Geral.getLowResBitmap(lastTakenPicture)));
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
                             return null;
                         }
 
@@ -162,7 +177,7 @@ public class CameraActivity extends AppCompatActivity implements CameraHostProvi
 
     }
 
-    float[] results;
+    float[] results = new float[0];
 
     @Override
     public CameraHost getCameraHost() {

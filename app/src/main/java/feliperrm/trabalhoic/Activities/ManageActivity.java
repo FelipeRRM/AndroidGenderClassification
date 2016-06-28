@@ -174,7 +174,7 @@ public class ManageActivity extends AppCompatActivity {
 
         int nn_neurons[] = {
                 input.get(0).length, 	// layer 1: camada de entrada, neuronios = numero de pixels da imagem.
-                input.get(0).length * 2, 	// layer 2: hidden layer - 2x neuronios da primeira camada.
+                input.get(0).length , 	// layer 2: hidden layer - 1x neuronios da primeira camada.
                 Singleton.getSingleton().getCategories().size()			// layer 3: output layer - Número de categorias
         };
 
@@ -183,7 +183,7 @@ public class ManageActivity extends AppCompatActivity {
         try {
 
             //for (int i = 0; i < 10; ++i) {
-            float error =  mlp.learn(input, out, 0.01f);
+            float error =  mlp.learn(input, out, 0.001f);
                  //mlp.evaluateQuadraticError(input, out);
                 Log.d("error", String.valueOf(error));
          //   }

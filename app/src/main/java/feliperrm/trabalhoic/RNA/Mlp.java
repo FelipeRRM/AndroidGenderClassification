@@ -1,5 +1,7 @@
 package feliperrm.trabalhoic.RNA;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.io.*;
@@ -169,8 +171,9 @@ public class Mlp {
 
 		float e = Float.POSITIVE_INFINITY;
 
-		while (e > 0.001f) {
+		while (e > 40) {
 
+            Log.d("Error", String.valueOf(e));
 			batchBackPropagation(examples, results, learning_rate);
 
 			e = evaluateQuadraticError(examples, results);

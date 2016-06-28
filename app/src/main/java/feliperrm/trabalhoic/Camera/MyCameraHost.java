@@ -34,4 +34,9 @@ public class MyCameraHost extends SimpleCameraHost {
         public void saveImage(PictureTransaction xact, Bitmap bitmap);
         public void saveImage(PictureTransaction xact, byte[] image);
     }
+
+    @Override
+    public boolean useSingleShotMode() {
+        return true;
+    }
 }

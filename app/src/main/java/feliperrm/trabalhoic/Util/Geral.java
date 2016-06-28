@@ -6,6 +6,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -21,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -38,6 +45,7 @@ public class Geral {
 
     private static final String ARQUIVO = "sharedpreferences";
     private static final String APP_NAME = "AndroidClassification";
+    public static final int IMAGE_SIZE = 30;
 
     /**
      * This method converts dp unit to equivalent pixels, depending on device density.
@@ -339,7 +347,7 @@ public class Geral {
     }
 
     public static void prepareFileForNetwork(String absolutePath) {
-        File file = new File(absolutePath);
+        replaceImageLowRes(absolutePath);
     }
 
     public static void deleteFile(String filePath) {
@@ -347,4 +355,130 @@ public class Geral {
         boolean deleted = file.delete();
         Log.d("Deleted File", String.valueOf(deleted));
     }
+
+    public static void replaceImageLowRes(String filePath){
+        Bitmap b= BitmapFactory.decodeFile(filePath);
+        Bitmap out = Bitmap.createScaledBitmap(b, IMAGE_SIZE, IMAGE_SIZE, true);
+
+        File file = new File(filePath);
+        FileOutputStream fOut;
+        try {
+            fOut = new FileOutputStream(file);
+            out.compress(Bitmap.CompressFormat.JPEG, 90, fOut);
+            fOut.flush();
+            fOut.close();
+            b.recycle();
+            out.recycle();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Bitmap getLowResBitmap(Bitmap bitmap){
+        return getScaledBitmap(bitmap, IMAGE_SIZE);
+    }
+
+    public static Bitmap toGrayscale(Bitmap bmpOriginal)
+    {
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
+    }
+
+    public static float[] getImageGreyscaleArray(String imagePath){
+            Bitmap bmp = BitmapFactory.decodeFile(imagePath);
+            int width = bmp.getWidth();
+            int height = bmp.getHeight();
+            float[] grayscale = new float[width*height];
+            int val, R, G, B;
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    val = bmp.getPixel(j, i);
+                    R = (val >> 16) & 0xff ;
+                    G = (val >> 8) & 0xff ;
+                    B = val & 0xff ;
+                    grayscale[i*width + j] = (float) (0.21*R + 0.71*G + 0.07*B);
+                }
+            }
+
+            return grayscale;
+    }
+
+    public static float[] getImageGreyscaleArray(Bitmap bitmap){
+        Bitmap bmp = bitmap;
+        int width = bmp.getWidth();
+        int height = bmp.getHeight();
+        float[] grayscale = new float[width*height];
+        int val, R, G, B;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                val = bmp.getPixel(j, i);
+                R = (val >> 16) & 0xff ;
+                G = (val >> 8) & 0xff ;
+                B = val & 0xff ;
+                grayscale[i*width + j] = (float) (0.21*R + 0.71*G + 0.07*B);
+            }
+        }
+
+        return grayscale;
+    }
+
+    public static Bitmap getSquareBitmap(Bitmap srcBmp){
+        Bitmap dstBmp;
+        if (srcBmp.getWidth() >= srcBmp.getHeight()){
+
+            dstBmp = Bitmap.createBitmap(
+                    srcBmp,
+                    srcBmp.getWidth()/2 - srcBmp.getHeight()/2,
+                    0,
+                    srcBmp.getHeight(),
+                    srcBmp.getHeight()
+            );
+
+        }else{
+
+            dstBmp = Bitmap.createBitmap(
+                    srcBmp,
+                    0,
+                    srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                    srcBmp.getWidth(),
+                    srcBmp.getWidth()
+            );
+        }
+
+        return dstBmp;
+    }
+
+    public static Bitmap getScaledBitmap(Bitmap source, int maxHeightOrWidth){
+        try {
+            int height = source.getHeight();
+            int width = source.getWidth();
+            float factor;
+            if (height >= width) {
+                factor = (float) ((float) height / (float) maxHeightOrWidth);
+                height = maxHeightOrWidth;
+                width = (int) (width / factor);
+            } else {
+                factor = (float) ((float) width / (float) maxHeightOrWidth);
+                width = maxHeightOrWidth;
+                height = (int) (height / factor);
+            }
+            return Bitmap.createScaledBitmap(source, width, height, true);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

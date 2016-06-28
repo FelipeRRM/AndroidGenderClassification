@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.CameraActivity"
+    android:animateLayoutChanges="true">
+
+    <com.commonsware.cwac.camera.CameraView
+        android:id="@+id/cameraView"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/takePicture"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_marginBottom="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/dennyPicture"
+        android:src="@drawable/x"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:id="@+id/acceptPicture"
+        android:src="@drawable/ok"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <RelativeLayout
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone"
+        android:id="@+id/resultLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+        <Button
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:text="X"
+            android:id="@+id/closeResult"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_below="@+id/imageView"
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

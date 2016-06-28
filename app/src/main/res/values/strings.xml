@@ -17,4 +17,6 @@
     <string name="loading_categories">Carregando categorias...</string>
     <string name="delete_image">Deletar Imagem</string>
     <string name="delete_image_message">Tem certeza que deseja deletar essa imagem?</string>
+    <string name="mlp_null">A rede está nula, treine-a antes de continuar!</string>
+    <string name="testing_network">Processando foto...</string>
 </resources>

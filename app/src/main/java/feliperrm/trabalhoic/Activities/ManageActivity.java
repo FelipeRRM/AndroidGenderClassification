@@ -16,11 +16,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import feliperrm.trabalhoic.Adapters.CategoriesAdapter;
 import feliperrm.trabalhoic.Model.Category;
 import feliperrm.trabalhoic.R;
+import feliperrm.trabalhoic.RNA.Mlp;
 import feliperrm.trabalhoic.Util.Geral;
 import feliperrm.trabalhoic.Util.Singleton;
 
@@ -50,7 +54,6 @@ public class ManageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage);
         findViews();
         setUpViews();
-        readFileSystemAndUpdate();
     }
 
     private void findViews(){
@@ -132,9 +135,9 @@ public class ManageActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... voids) {
+                createAndTrainNetwork();
                 return null;
             }
-
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
@@ -148,69 +151,49 @@ public class ManageActivity extends AppCompatActivity {
     }
 
 
-    public void readFileSystemAndUpdate(){
-        final ProgressDialog progressDialog = new ProgressDialog(ManageActivity.this);
-        progressDialog.setMessage(getString(R.string.loading_categories));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        new AsyncTask<Void, Void, Void>(){
+    private void createAndTrainNetwork(){
+        // initialization
+        ArrayList<float[]> input = new ArrayList<float[]>();
+        ArrayList<float[]> out = new ArrayList<float[]>();
 
-            @Override
-            protected Void doInBackground(Void... voids) {
-                navigateDirectoryAndPrepareFiles(new File(Geral.getCategoryFolderParent()));
-                return null;
+        int i = 0;
+        while(i<Singleton.getSingleton().getCategories().size()){
+            Category category = Singleton.getSingleton().getCategories().get(i);
+            int j = 0;
+            while(j<category.getFiles().size()){
+                String imageAtual = category.getFiles().get(j);
+                float[] imgArray = Geral.getImageGreyscaleArray(Geral.getCategoryFolderPath(category.getName())+imageAtual);
+                input.add(imgArray);
+                float[] fl = new float[Singleton.getSingleton().getCategories().size()];
+                fl[i] = 1;
+                out.add(fl);
+                j++;
             }
+            i++;
+        }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                progressDialog.dismiss();
-                if(Singleton.getSingleton().getNeedsToTrainNetwork()) {
-                    networkStatusTxt.setText(getString(R.string.needs_training));
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                }
-                else
-                    networkStatusTxt.setText(getString(R.string.network_is_trained));
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
+        int nn_neurons[] = {
+                input.get(0).length, 	// layer 1: camada de entrada, neuronios = numero de pixels da imagem.
+                input.get(0).length * 2, 	// layer 2: hidden layer - 2x neuronios da primeira camada.
+                Singleton.getSingleton().getCategories().size()			// layer 3: output layer - Número de categorias
+        };
 
-    public void navigateDirectoryAndPrepareFiles(File dir) {
+        Mlp mlp = new Mlp(nn_neurons);
+
         try {
-            File[] files = dir.listFiles();
-            for (File dirs : files) {
-                if (dirs.isDirectory()) {
-                    Log.d("Directory", dirs.getName());
-                    if(Singleton.getSingleton().isStringInCategory(dirs.getName())) {
-                        File[] listOfFiles = dirs.listFiles();
-                        for (File file : listOfFiles) {
-                            if (file.isFile()) {
-                                if(!Singleton.getSingleton().isFileInCategory(file.getName(), dirs.getName())) {
-                                    Singleton.getSingleton().addFileToCategory(file.getName(), dirs.getName());
-                                    Singleton.getSingleton().setNeedsToTrainNetwork(true);
-                                    Geral.prepareFileForNetwork(file.getAbsolutePath());
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Singleton.getSingleton().setNeedsToTrainNetwork(true);
-                        ArrayList<String> imageFiles = new ArrayList<>();
-                        File[] listOfFiles = dirs.listFiles();
-                        for (File file : listOfFiles) {
-                            if (file.isFile()) {
-                                imageFiles.add(new String(file.getName()));
-                                Geral.prepareFileForNetwork(file.getAbsolutePath());
-                            }
-                        }
-                        Singleton.getSingleton().addToCategories(new Category(dirs.getName(), imageFiles));
-                    }
-                }
-            }
-        } catch (Exception e) {
+
+            //for (int i = 0; i < 10; ++i) {
+            float error =  mlp.learn(input, out, 0.01f);
+                 //mlp.evaluateQuadraticError(input, out);
+                Log.d("error", String.valueOf(error));
+         //   }
+            Singleton.getSingleton().setMlp(mlp);
+
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
+
+
 
 }

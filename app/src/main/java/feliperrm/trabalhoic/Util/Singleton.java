@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 
 import feliperrm.trabalhoic.Model.Category;
+import feliperrm.trabalhoic.RNA.Mlp;
 
 /**
  * Created by felip on 17/05/2016.
@@ -19,6 +20,15 @@ public class Singleton {
     private static final String CATEGORIES_KEY = "categorieskey";
     private Boolean needsToTrainNetwork;
     private static final String NEEDS_TRAIN_KEY = "needstrainingkey";
+    private Mlp mlp;
+
+    public Mlp getMlp() {
+        return mlp;
+    }
+
+    public void setMlp(Mlp mlp) {
+        this.mlp = mlp;
+    }
 
     public Boolean getNeedsToTrainNetwork() {
         if(needsToTrainNetwork==null)
